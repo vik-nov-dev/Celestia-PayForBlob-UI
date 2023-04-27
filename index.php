@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<div class="row justify-content-center">
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-md-6 mt-3">
 			<p>Get shares by block height and <code>namespace_id</code></p>
 			<form class="js-get-shares">
 				<div class="form-floating mb-3">
@@ -114,11 +114,11 @@ async function getShares(event) {
 	let formData = new FormData();
 	// Add the data.
 	formData.append('namespace_id', event.target.querySelector('input[name="namespace_id"]').value);
-	formData.append('data', event.target.querySelector('input[name="height"]').value);
+	formData.append('height', event.target.querySelector('input[name="height"]').value);
 	try {
 		// Make the request.
 		const response = await fetch(
-			'/submit_pfb.php',
+			'/get_shares.php',
 			{
 				method: 'POST',
 				body: formData
@@ -133,7 +133,7 @@ async function getShares(event) {
 
 		if (data.success) {
 			// Print the response in case of success.
-			if (data.data.hasOwnProperty('data')) {
+			if (data.data.hasOwnProperty('shares')) {
 				document.querySelector('.js-response-shares').textContent = JSON.stringify(data.data, undefined, 2);
 			}
 		} else {
